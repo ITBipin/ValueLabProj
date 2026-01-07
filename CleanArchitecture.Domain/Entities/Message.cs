@@ -1,0 +1,15 @@
+using System;
+
+namespace CleanArchitecture.Domain.Entities
+{
+    public class Message
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid OrganizationId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
+    }
+}

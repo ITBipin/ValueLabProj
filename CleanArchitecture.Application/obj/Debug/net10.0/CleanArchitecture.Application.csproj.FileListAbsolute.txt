@@ -1,0 +1,15 @@
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\bin\Debug\net10.0\CleanArchitecture.Application.deps.json
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\bin\Debug\net10.0\CleanArchitecture.Application.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\bin\Debug\net10.0\CleanArchitecture.Application.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\bin\Debug\net10.0\CleanArchitecture.Domain.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\bin\Debug\net10.0\CleanArchitecture.Domain.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.csproj.AssemblyReference.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.AssemblyInfoInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.AssemblyInfo.cs
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.csproj.CoreCompileInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArc.03AFA812.Up2Date
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\refint\CleanArchitecture.Application.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\CleanArchitecture.Application.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Application\obj\Debug\net10.0\ref\CleanArchitecture.Application.dll

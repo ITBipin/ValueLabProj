@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using Xunit;
+using Moq;
+using FluentAssertions;
+using CodeChallenge.Repositories;
+using CodeChallenge.Logic;
+using CodeChallenge.Models;
+
+namespace CodeChallenge.Tests
+{
+    public class MessageLogicTests
+    {
+        [Fact]
+        public void Create_Should_Create_Message_Successfully()
+        {
+            var repo = new Mock<IMessageRepository>();
+            repo.Setup(r => r.ExistsTitle(It.IsAny<Guid>(), It.IsAny<string>(), null)).Returns(false);
+            var logic = new MessageLogic(repo.Object);
+
+            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hello", Content = "This is valid content" };
+            var res = logic.Create(msg);
+            res.Should().BeOfType<CreatedResult<Message>>();
+        }
+
+        [Fact]
+        public void Create_DuplicateTitle_Returns_Conflict()
+        {
+            var repo = new Mock<IMessageRepository>();
+            repo.Setup(r => r.ExistsTitle(It.IsAny<Guid>(), It.IsAny<string>(), null)).Returns(true);
+            var logic = new MessageLogic(repo.Object);
+
+            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hello", Content = "This is valid content" };
+            var res = logic.Create(msg);
+            res.Should().BeOfType<ConflictResult>();
+        }
+
+        [Fact]
+        public void Create_InvalidContent_Returns_ValidationError()
+        {
+            var repo = new Mock<IMessageRepository>();
+            var logic = new MessageLogic(repo.Object);
+
+            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hi", Content = "short" };
+            var res = logic.Create(msg);
+            res.Should().BeOfType<ValidationErrorResult>();
+        }
+
+        [Fact]
+        public void Update_NonExistent_Returns_NotFound()
+        {
+            var repo = new Mock<IMessageRepository>();
+            repo.Setup(r => r.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns((Message?)null);
+            var logic = new MessageLogic(repo.Object);
+
+            var msg = new Message { OrganizationId = Guid.NewGuid(), Id = Guid.NewGuid(), Title = "Title", Content = "Valid content here" };
+            var res = logic.Update(msg);
+            res.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public void Update_Inactive_Returns_ValidationError()
+        {\n            var existing = new Message { Id = Guid.NewGuid(), OrganizationId = Guid.NewGuid(), Title = "T", Content = "Long enough content", IsActive = false };
+            var repo = new Mock<IMessageRepository>();
+            repo.Setup(r => r.Get(existing.OrganizationId, existing.Id)).Returns(existing);
+            var logic = new MessageLogic(repo.Object);
+
+            var msg = new Message { OrganizationId = existing.OrganizationId, Id = existing.Id, Title = "T2", Content = "Valid content here" };
+            var res = logic.Update(msg);
+            res.Should().BeOfType<ValidationErrorResult>();
+        }
+
+        [Fact]
+        public void Delete_NonExistent_Returns_NotFound()
+        {\n            var repo = new Mock<IMessageRepository>();
+            repo.Setup(r => r.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns((Message?)null);
+            var logic = new MessageLogic(repo.Object);
+
+            var res = logic.Delete(Guid.NewGuid(), Guid.NewGuid());
+            res.Should().BeOfType<NotFoundResult>();
+        }
+    }
+}

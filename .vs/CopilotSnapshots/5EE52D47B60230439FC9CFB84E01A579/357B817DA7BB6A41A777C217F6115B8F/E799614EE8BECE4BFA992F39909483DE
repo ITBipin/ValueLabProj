@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using ValueLabProj.CodeChallenge.Models;
+
+namespace ValueLabProj.CodeChallenge.Repositories
+{
+    public interface IMessageRepository
+    {
+        IEnumerable<Message> GetAll(Guid organizationId);
+        Message? Get(Guid organizationId, Guid id);
+        void Create(Message message);
+        void Update(Message message);
+        bool Delete(Guid organizationId, Guid id);
+        bool ExistsTitle(Guid organizationId, string title, Guid? excludeId = null);
+    }
+}

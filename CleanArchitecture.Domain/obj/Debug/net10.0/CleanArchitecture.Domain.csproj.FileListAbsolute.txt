@@ -1,0 +1,11 @@
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\bin\Debug\net10.0\CleanArchitecture.Domain.deps.json
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\bin\Debug\net10.0\CleanArchitecture.Domain.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\bin\Debug\net10.0\CleanArchitecture.Domain.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.AssemblyInfoInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.AssemblyInfo.cs
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.csproj.CoreCompileInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\refint\CleanArchitecture.Domain.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\CleanArchitecture.Domain.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Domain\obj\Debug\net10.0\ref\CleanArchitecture.Domain.dll

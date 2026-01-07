@@ -1,0 +1,17 @@
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Infrastructure.deps.json
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Infrastructure.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Infrastructure.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Application.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Domain.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Application.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\bin\Debug\net10.0\CleanArchitecture.Domain.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.csproj.AssemblyReference.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.AssemblyInfoInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.AssemblyInfo.cs
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.csproj.CoreCompileInputs.cache
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArc.38F44B56.Up2Date
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\refint\CleanArchitecture.Infrastructure.dll
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\CleanArchitecture.Infrastructure.pdb
+D:\ValueLabs\ValueLabProj\CleanArchitecture.Infrastructure\obj\Debug\net10.0\ref\CleanArchitecture.Infrastructure.dll

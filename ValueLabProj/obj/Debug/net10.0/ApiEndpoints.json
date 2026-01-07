@@ -1,0 +1,148 @@
+[
+  {
+    "ContainingType": "ValueLabProj.Controllers.MessagesController",
+    "Method": "GetAll",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ValueLabProj.CodeChallenge.Models.Message, ValueLabProj, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ValueLabProj.Controllers.MessagesController",
+    "Method": "Create",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "msg",
+        "Type": "ValueLabProj.CodeChallenge.Models.Message",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ValueLabProj.Controllers.MessagesController",
+    "Method": "Get",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ValueLabProj.CodeChallenge.Models.Message",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ValueLabProj.Controllers.MessagesController",
+    "Method": "Update",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "msg",
+        "Type": "ValueLabProj.CodeChallenge.Models.Message",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ValueLabProj.Controllers.MessagesController",
+    "Method": "Delete",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ValueLabProj.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[ValueLabProj.WeatherForecast, ValueLabProj, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

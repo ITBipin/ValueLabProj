@@ -1,0 +1,16 @@
+using System;
+using System.Collections.Generic;
+using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Application.Common.Results;
+
+namespace CleanArchitecture.Application.Services
+{
+    public interface IMessageService
+    {
+        IEnumerable<Message> GetAll(Guid organizationId);
+        Message? GetById(Guid organizationId, Guid id);
+        Result Create(Message message);
+        Result Update(Message message);
+        Result Delete(Guid organizationId, Guid id);
+    }
+}

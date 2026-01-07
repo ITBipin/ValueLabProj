@@ -1,0 +1,12 @@
+using System;
+using System.Collections.Generic;
+
+namespace CleanArchitecture.Application.Common.Results
+{
+    public abstract class Result { }
+    public class SuccessResult : Result { }
+    public class NotFoundResult : Result { }
+    public class ConflictResult : Result { public string Text { get; set; } = string.Empty; }
+    public class ValidationErrorResult : Result { public Dictionary<string, string[]> Errors { get; set; } = new(); }
+    public class CreatedResult<T> : Result { public T Value { get; set; } = default!; }
+}

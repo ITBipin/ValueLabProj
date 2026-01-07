@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using CodeChallenge.Models;
+
+namespace CodeChallenge.Repositories
+{
+    public class InMemoryMessageRepository : IMessageRepository
+    {
+        private readonly ConcurrentDictionary<Guid, List<Message>> _store = new();
+
+        public IEnumerable<Message> GetAll(Guid organizationId)
+        {
+            if (_store.TryGetValue(organizationId, out var list))
+                return list.Select(m => Clone(m));
+            return Enumerable.Empty<Message>();
+        }
+
+        public Message? Get(Guid organizationId, Guid id)
+        {
+            if (_store.TryGetValue(organizationId, out var list))
+                return list.FirstOrDefault(m => m.Id == id);
+            return null;
+        }
+
+        public void Create(Message message)
+        {
+            var list = _store.GetOrAdd(message.OrganizationId, _ => new List<Message>());
+            list.Add(Clone(message));
+        }
+
+        public void Update(Message message)
+        {
+            if (!_store.TryGetValue(message.OrganizationId, out var list)) return;
+            var idx = list.FindIndex(m => m.Id == message.Id);
+            if (idx >= 0) list[idx] = Clone(message);
+        }
+
+        public bool Delete(Guid organizationId, Guid id)
+        {
+            if (!_store.TryGetValue(organizationId, out var list)) return false;
+            var idx = list.FindIndex(m => m.Id == id);
+            if (idx >= 0) { list.RemoveAt(idx); return true; }
+            return false;
+        }
+
+        public bool ExistsTitle(Guid organizationId, string title, Guid? excludeId = null)
+        {
+            if (!_store.TryGetValue(organizationId, out var list)) return false;
+            return list.Any(m => m.Title.Equals(title, StringComparison.OrdinalIgnoreCase) && m.Id != excludeId);
+        }
+
+        private Message Clone(Message m) => new Message
+        {
+            Id = m.Id,
+            OrganizationId = m.OrganizationId,
+            Title = m.Title,
+            Content = m.Content,
+            IsActive = m.IsActive,
+            CreatedAt = m.CreatedAt,
+            UpdatedAt = m.UpdatedAt
+        };
+    }
+}

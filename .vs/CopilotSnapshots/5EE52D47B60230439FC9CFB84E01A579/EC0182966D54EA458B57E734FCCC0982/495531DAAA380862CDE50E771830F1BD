@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using ValueLabProj.CodeChallenge.Models;
+
+namespace ValueLabProj.CodeChallenge.Logic
+{
+    public interface IMessageLogic
+    {
+        IEnumerable<Message> GetAll(Guid organizationId);
+        Message? GetById(Guid organizationId, Guid id);
+        Result Create(Message message);
+        Result Update(Message message);
+        Result Delete(Guid organizationId, Guid id);
+    }
+}

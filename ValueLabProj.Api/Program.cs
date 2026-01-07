@@ -1,0 +1,35 @@
+using CleanArchitecture.Infrastructure.Persistence;
+using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Services;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+// Add Swagger/OpenAPI generation for UI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// register code challenge services
+builder.Services.AddSingleton<IMessageRepository, InMemoryMessageRepository>();
+builder.Services.AddScoped<IMessageService, MessageService>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+// Map OpenAPI endpoints and enable Swagger UI
+app.MapOpenApi();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

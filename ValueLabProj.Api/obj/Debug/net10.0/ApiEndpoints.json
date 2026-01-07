@@ -1,0 +1,127 @@
+[
+  {
+    "ContainingType": "ValueLabProj.Api.Controllers.MessagesController",
+    "Method": "GetAll",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CleanArchitecture.Domain.Entities.Message, CleanArchitecture.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ValueLabProj.Api.Controllers.MessagesController",
+    "Method": "Create",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "msg",
+        "Type": "CleanArchitecture.Domain.Entities.Message",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ValueLabProj.Api.Controllers.MessagesController",
+    "Method": "Get",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CleanArchitecture.Domain.Entities.Message",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ValueLabProj.Api.Controllers.MessagesController",
+    "Method": "Update",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "msg",
+        "Type": "CleanArchitecture.Domain.Entities.Message",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ValueLabProj.Api.Controllers.MessagesController",
+    "Method": "Delete",
+    "RelativePath": "api/v1/organizations/{organizationId}/Messages/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "organizationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

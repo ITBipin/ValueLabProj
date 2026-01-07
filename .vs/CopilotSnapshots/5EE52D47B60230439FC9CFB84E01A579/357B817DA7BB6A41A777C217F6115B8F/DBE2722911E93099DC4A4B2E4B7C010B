@@ -1,0 +1,76 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using ValueLabProj.CodeChallenge.Models;
+using ValueLabProj.CodeChallenge.Logic;
+
+namespace ValueLabProj.Controllers
+{
+    [ApiController]
+    [Route("api/v1/organizations/{organizationId}/[controller]")]
+    public class MessagesController : ControllerBase
+    {
+        private readonly IMessageLogic _logic;
+
+        public MessagesController(IMessageLogic logic)
+        {
+            _logic = logic;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Message>> GetAll(Guid organizationId)
+        {
+            var result = _logic.GetAll(organizationId);
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Message> Get(Guid organizationId, Guid id)
+        {
+            var res = _logic.GetById(organizationId, id);
+            if (res == null) return NotFound();
+            return Ok(res);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Guid organizationId, [FromBody] Message msg)
+        {
+            msg.OrganizationId = organizationId;
+            var res = _logic.Create(msg);
+            return res switch
+            {
+                CreatedResult<Message> c => CreatedAtAction(nameof(Get), new { organizationId = organizationId, id = c.Value.Id }, c.Value),
+                ValidationErrorResult ve => BadRequest(ve.Errors),
+                ConflictResult cr => Conflict(cr.Text),
+                _ => StatusCode(500)
+            };
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update(Guid organizationId, Guid id, [FromBody] Message msg)
+        {
+            msg.Id = id;
+            msg.OrganizationId = organizationId;
+            var res = _logic.Update(msg);
+            return res switch
+            {
+                SuccessResult _ => NoContent(),
+                NotFoundResult _ => NotFound(),
+                ValidationErrorResult ve => BadRequest(ve.Errors),
+                ConflictResult cr => Conflict(cr.Text),
+                _ => StatusCode(500)
+            };
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(Guid organizationId, Guid id)
+        {
+            var res = _logic.Delete(organizationId, id);
+            return res switch
+            {
+                SuccessResult _ => NoContent(),
+                NotFoundResult _ => NotFound(),
+                ValidationErrorResult ve => BadRequest(ve.Errors),
+                _ => StatusCode(500)
+            };
+        }
+    }
+}

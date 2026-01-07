@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore
+      run: dotnet restore CleanArchitectureSolution.slnx
+
+    - name: Build
+      run: dotnet build CleanArchitectureSolution.slnx --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test CleanArchitectureSolution.slnx --no-build --verbosity normal
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        push: false
+        tags: myorg/valuelab-api:latest
+        file: ValueLabProj.Api/Dockerfile
+        context: .
