@@ -7,10 +7,12 @@ namespace CleanArchitecture.Application.Services
 {
     public interface IMessageService
     {
-        IEnumerable<Message> GetAll(Guid organizationId);
-        Message? GetById(Guid organizationId, Guid id);
-        Result Create(Message message);
-        Result Update(Message message);
-        Result Delete(Guid organizationId, Guid id);
+        Task<IEnumerable<Message>> GetAllAsync(Guid organizationId);
+        Task<Message?> GetByIdAsync(Guid organizationId, Guid id);
+        Task<Result> CreateAsync(Message message);
+        Task<Result> UpdateAsync(Message message);
+        Task<Result> DeleteAsync(Guid organizationId, Guid id);
     }
+
+
 }

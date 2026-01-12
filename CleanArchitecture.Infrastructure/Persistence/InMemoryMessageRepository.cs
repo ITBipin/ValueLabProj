@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Application.Common.Interfaces;
 
@@ -9,58 +10,61 @@ namespace CleanArchitecture.Infrastructure.Persistence
 {
     public class InMemoryMessageRepository : IMessageRepository
     {
-        private readonly ConcurrentDictionary<Guid, List<Message>> _store = new();
+        private readonly ConcurrentDictionary<Guid, Message> _messages = new();
 
-        public IEnumerable<Message> GetAll(Guid organizationId)
+        public Task<IEnumerable<Message>> GetAllAsync(Guid organizationId)
         {
-            if (_store.TryGetValue(organizationId, out var list))
-                return list.Select(m => Clone(m));
-            return Enumerable.Empty<Message>();
+            var result = _messages.Values
+                .Where(m => m.OrganizationId == organizationId)
+                .AsEnumerable();
+
+            return Task.FromResult(result);
         }
 
-        public Message? Get(Guid organizationId, Guid id)
+        public Task<Message?> GetAsync(Guid organizationId, Guid id)
         {
-            if (_store.TryGetValue(organizationId, out var list))
-                return list.FirstOrDefault(m => m.Id == id);
-            return null;
+            _messages.TryGetValue(id, out var message);
+
+            if (message?.OrganizationId != organizationId)
+                return Task.FromResult<Message?>(null);
+
+            return Task.FromResult(message);
         }
 
-        public void Create(Message message)
+        public Task AddAsync(Message message)
         {
-            var list = _store.GetOrAdd(message.OrganizationId, _ => new List<Message>());
-            list.Add(Clone(message));
+            _messages[message.Id] = message;
+            return Task.CompletedTask;
         }
 
-        public void Update(Message message)
+        public Task UpdateAsync(Message message)
         {
-            if (!_store.TryGetValue(message.OrganizationId, out var list)) return;
-            var idx = list.FindIndex(m => m.Id == message.Id);
-            if (idx >= 0) list[idx] = Clone(message);
+            _messages[message.Id] = message;
+            return Task.CompletedTask;
         }
 
-        public bool Delete(Guid organizationId, Guid id)
+        public Task<bool> DeleteAsync(Guid organizationId, Guid id)
         {
-            if (!_store.TryGetValue(organizationId, out var list)) return false;
-            var idx = list.FindIndex(m => m.Id == id);
-            if (idx >= 0) { list.RemoveAt(idx); return true; }
-            return false;
+            if (_messages.TryGetValue(id, out var message) &&
+                message.OrganizationId == organizationId)
+            {
+                return Task.FromResult(_messages.TryRemove(id, out _));
+            }
+
+            return Task.FromResult(false);
         }
 
-        public bool ExistsTitle(Guid organizationId, string title, Guid? excludeId = null)
+        public Task<bool> ExistsTitleAsync(
+            Guid organizationId,
+            string title,
+            Guid? excludeMessageId = null)
         {
-            if (!_store.TryGetValue(organizationId, out var list)) return false;
-            return list.Any(m => m.Title.Equals(title, StringComparison.OrdinalIgnoreCase) && m.Id != excludeId);
-        }
+            var exists = _messages.Values.Any(m =>
+                m.OrganizationId == organizationId &&
+                m.Title.Equals(title, StringComparison.OrdinalIgnoreCase) &&
+                (!excludeMessageId.HasValue || m.Id != excludeMessageId));
 
-        private Message Clone(Message m) => new Message
-        {
-            Id = m.Id,
-            OrganizationId = m.OrganizationId,
-            Title = m.Title,
-            Content = m.Content,
-            IsActive = m.IsActive,
-            CreatedAt = m.CreatedAt,
-            UpdatedAt = m.UpdatedAt
-        };
+            return Task.FromResult(exists);
+        }
     }
 }

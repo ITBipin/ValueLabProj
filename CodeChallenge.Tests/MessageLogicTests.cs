@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 using Moq;
 using FluentAssertions;
@@ -13,74 +14,152 @@ namespace CodeChallenge.Tests
     public class MessageServiceTests
     {
         [Fact]
-        public void Create_Should_Create_Message_Successfully()
+        public async Task Create_Should_Create_Message_Successfully()
         {
             var repo = new Mock<IMessageRepository>();
-            repo.Setup(r => r.ExistsTitle(It.IsAny<Guid>(), It.IsAny<string>(), null)).Returns(false);
+            repo.Setup(r => r.ExistsTitleAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<string>(),
+                    null))
+                .ReturnsAsync(false);
+
             var service = new MessageService(repo.Object);
 
-            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hello", Content = "This is valid content" };
-            var res = service.Create(msg);
+            var msg = new Message
+            {
+                OrganizationId = Guid.NewGuid(),
+                Title = "Hello",
+                Content = "This is valid content"
+            };
+
+            var res = await service.CreateAsync(msg);
+
             res.Should().BeOfType<CreatedResult<Message>>();
+
+            repo.Verify(r => r.AddAsync(It.IsAny<Message>()), Times.Once);
         }
 
         [Fact]
-        public void Create_DuplicateTitle_Returns_Conflict()
+        public async Task Create_DuplicateTitle_Returns_Conflict()
         {
             var repo = new Mock<IMessageRepository>();
-            repo.Setup(r => r.ExistsTitle(It.IsAny<Guid>(), It.IsAny<string>(), null)).Returns(true);
+            repo.Setup(r => r.ExistsTitleAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<string>(),
+                    null))
+                .ReturnsAsync(true);
+
             var service = new MessageService(repo.Object);
 
-            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hello", Content = "This is valid content" };
-            var res = service.Create(msg);
+            var msg = new Message
+            {
+                OrganizationId = Guid.NewGuid(),
+                Title = "Hello",
+                Content = "This is valid content"
+            };
+
+            var res = await service.CreateAsync(msg);
+
             res.Should().BeOfType<ConflictResult>();
+
+            repo.Verify(r => r.AddAsync(It.IsAny<Message>()), Times.Never);
         }
 
         [Fact]
-        public void Create_InvalidContent_Returns_ValidationError()
+        public async Task Create_InvalidContent_Returns_ValidationError()
         {
             var repo = new Mock<IMessageRepository>();
             var service = new MessageService(repo.Object);
 
-            var msg = new Message { OrganizationId = Guid.NewGuid(), Title = "Hi", Content = "short" };
-            var res = service.Create(msg);
+            var msg = new Message
+            {
+                OrganizationId = Guid.NewGuid(),
+                Title = "Hi",
+                Content = "short"
+            };
+
+            var res = await service.CreateAsync(msg);
+
             res.Should().BeOfType<ValidationErrorResult>();
+
+            repo.Verify(r => r.AddAsync(It.IsAny<Message>()), Times.Never);
         }
 
         [Fact]
-        public void Update_NonExistent_Returns_NotFound()
+        public async Task Update_NonExistent_Returns_NotFound()
         {
             var repo = new Mock<IMessageRepository>();
-            repo.Setup(r => r.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns((Message?)null);
+            repo.Setup(r => r.GetAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<Guid>()))
+                .ReturnsAsync((Message?)null);
+
             var service = new MessageService(repo.Object);
 
-            var msg = new Message { OrganizationId = Guid.NewGuid(), Id = Guid.NewGuid(), Title = "Title", Content = "Valid content here" };
-            var res = service.Update(msg);
+            var msg = new Message
+            {
+                OrganizationId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                Title = "Title",
+                Content = "Valid content here"
+            };
+
+            var res = await service.UpdateAsync(msg);
+
             res.Should().BeOfType<NotFoundResult>();
+
+            repo.Verify(r => r.UpdateAsync(It.IsAny<Message>()), Times.Never);
         }
 
         [Fact]
-        public void Update_Inactive_Returns_ValidationError()
+        public async Task Update_Inactive_Returns_ValidationError()
         {
-            var existing = new Message { Id = Guid.NewGuid(), OrganizationId = Guid.NewGuid(), Title = "T", Content = "Long enough content", IsActive = false };
+            var existing = new Message
+            {
+                Id = Guid.NewGuid(),
+                OrganizationId = Guid.NewGuid(),
+                Title = "T",
+                Content = "Long enough content",
+                IsActive = false
+            };
+
             var repo = new Mock<IMessageRepository>();
-            repo.Setup(r => r.Get(existing.OrganizationId, existing.Id)).Returns(existing);
+            repo.Setup(r => r.GetAsync(existing.OrganizationId, existing.Id))
+                .ReturnsAsync(existing);
+
             var service = new MessageService(repo.Object);
 
-            var msg = new Message { OrganizationId = existing.OrganizationId, Id = existing.Id, Title = "T2", Content = "Valid content here" };
-            var res = service.Update(msg);
+            var msg = new Message
+            {
+                OrganizationId = existing.OrganizationId,
+                Id = existing.Id,
+                Title = "T2",
+                Content = "Valid content here"
+            };
+
+            var res = await service.UpdateAsync(msg);
+
             res.Should().BeOfType<ValidationErrorResult>();
+
+            repo.Verify(r => r.UpdateAsync(It.IsAny<Message>()), Times.Never);
         }
 
         [Fact]
-        public void Delete_NonExistent_Returns_NotFound()
+        public async Task Delete_NonExistent_Returns_NotFound()
         {
             var repo = new Mock<IMessageRepository>();
-            repo.Setup(r => r.Get(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns((Message?)null);
+            repo.Setup(r => r.GetAsync(
+                    It.IsAny<Guid>(),
+                    It.IsAny<Guid>()))
+                .ReturnsAsync((Message?)null);
+
             var service = new MessageService(repo.Object);
 
-            var res = service.Delete(Guid.NewGuid(), Guid.NewGuid());
+            var res = await service.DeleteAsync(Guid.NewGuid(), Guid.NewGuid());
+
             res.Should().BeOfType<NotFoundResult>();
+
+            repo.Verify(r => r.DeleteAsync(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
         }
     }
 }

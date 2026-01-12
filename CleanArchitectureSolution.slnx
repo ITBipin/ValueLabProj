@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="CleanArchitecture.Application/CleanArchitecture.Application.csproj" />
   <Project Path="CleanArchitecture.Domain/CleanArchitecture.Domain.csproj" />
   <Project Path="CleanArchitecture.Infrastructure/CleanArchitecture.Infrastructure.csproj" />

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using CleanArchitecture.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Results = CleanArchitecture.Application.Common.Results;
@@ -17,40 +20,60 @@ namespace ValueLabProj.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Message>> GetAll(Guid organizationId)
+        public async Task<ActionResult<IEnumerable<Message>>> GetAll(Guid organizationId)
         {
-            var result = _service.GetAll(organizationId);
+            var result = await _service.GetAllAsync(organizationId);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Message> Get(Guid organizationId, Guid id)
+        public async Task<ActionResult<Message>> Get(Guid organizationId, Guid id)
         {
-            var res = _service.GetById(organizationId, id);
-            if (res == null) return NotFound();
+            var res = await _service.GetByIdAsync(organizationId, id);
+            if (res == null)
+                return NotFound();
+
             return Ok(res);
         }
 
         [HttpPost]
-        public ActionResult Create(Guid organizationId, [FromBody] Message msg)
+        public async Task<ActionResult> Create(
+            Guid organizationId,
+            [FromBody] Message msg)
         {
             msg.OrganizationId = organizationId;
-            var res = _service.Create(msg);
+
+            var res = await _service.CreateAsync(msg);
+
             return res switch
             {
-                Results.CreatedResult<Message> c => CreatedAtAction(nameof(Get), new { organizationId = organizationId, id = c.Value.Id }, c.Value),
-                Results.ValidationErrorResult ve => BadRequest(ve.Errors),
-                Results.ConflictResult cr => Conflict(cr.Text),
+                Results.CreatedResult<Message> c =>
+                    CreatedAtAction(
+                        nameof(Get),
+                        new { organizationId, id = c.Value.Id },
+                        c.Value),
+
+                Results.ValidationErrorResult ve =>
+                    BadRequest(ve.Errors),
+
+                Results.ConflictResult cr =>
+                    Conflict(cr.Text),
+
                 _ => StatusCode(500)
             };
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(Guid organizationId, Guid id, [FromBody] Message msg)
+        public async Task<ActionResult> Update(
+            Guid organizationId,
+            Guid id,
+            [FromBody] Message msg)
         {
             msg.Id = id;
             msg.OrganizationId = organizationId;
-            var res = _service.Update(msg);
+
+            var res = await _service.UpdateAsync(msg);
+
             return res switch
             {
                 Results.SuccessResult _ => NoContent(),
@@ -62,9 +85,10 @@ namespace ValueLabProj.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(Guid organizationId, Guid id)
+        public async Task<ActionResult> Delete(Guid organizationId, Guid id)
         {
-            var res = _service.Delete(organizationId, id);
+            var res = await _service.DeleteAsync(organizationId, id);
+
             return res switch
             {
                 Results.SuccessResult _ => NoContent(),

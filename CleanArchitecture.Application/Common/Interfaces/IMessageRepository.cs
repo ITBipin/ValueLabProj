@@ -1,16 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Common.Interfaces
 {
     public interface IMessageRepository
     {
-        IEnumerable<Message> GetAll(Guid organizationId);
-        Message? Get(Guid organizationId, Guid id);
-        void Create(Message message);
-        void Update(Message message);
-        bool Delete(Guid organizationId, Guid id);
-        bool ExistsTitle(Guid organizationId, string title, Guid? excludeId = null);
+        Task<IEnumerable<Message>> GetAllAsync(Guid organizationId);
+
+        Task<Message?> GetAsync(Guid organizationId, Guid id);
+
+        Task AddAsync(Message message);
+
+        Task UpdateAsync(Message message);
+
+        Task<bool> DeleteAsync(Guid organizationId, Guid id);
+
+        Task<bool> ExistsTitleAsync(
+            Guid organizationId,
+            string title,
+            Guid? excludeMessageId = null);
     }
 }
